@@ -11,11 +11,14 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@material-tailwind/react": "^2.1.2",
     "@mui/material": "^5.14.12",
+    "axios": "^1.5.1",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
-    "react-hook-form": "^7.47.0"
+    "react-hook-form": "^7.47.0",
+    "zustand": "^4.4.3"
   },
   "devDependencies": {
     "autoprefixer": "^10",
