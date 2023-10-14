@@ -1,4 +1,4 @@
-import Dashboard from '../components/rendingDash.jsx'
+import Dashboard from '@/components/rendingDash'
 
 const Home = () => {
   
