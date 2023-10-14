@@ -3,30 +3,36 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {useForm} from "react-hook-form";
+import { useStore } from '@/store/store';
+import { useRouter } from 'next/navigation'
 
 
 const LoginForm = () => {
+
+    //setting login
+    const router = useRouter();
+    const {login, currentUser, isLoggedIn} = useStore();
+    console.log(currentUser);
     const {register, handleSubmit} = useForm();
 
-    const [emailError, setEmailError] = React.useState("");
+    const [usernameError, setUsernameError] = React.useState("");
 
     const [passwordError, setPasswordError] = React.useState("");
 
 
     const handleFormSubmit = (formData) => {
         console.log(formData);
-        if (!formData.email || !formData.email.length) {
-            setEmailError("email is required");
+        login(formData.username, formData.password);
+        if (!formData.username || !formData.username.length) {
+            setUsernameError("username is required");
             return false;
         } else {
-            setEmailError("");
+            setUsernameError("");
         }
         if (!formData.password || !formData.password.length) {
             setPasswordError("Password is required");
@@ -37,7 +43,15 @@ const LoginForm = () => {
 
         return true;
     }
+
+    React.useEffect(() => {
+        if (isLoggedIn) {
+            router.push('/');
+        }
+    },);
+
     return (
+        <div className=' h-screen'>
 <Container component="main" maxWidth="xs">
     <Box
         sx={{
@@ -54,14 +68,14 @@ const LoginForm = () => {
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TextField
-                        error={!!(emailError && emailError.length)}
-                        helperText={emailError}
+                        error={!!(usernameError && usernameError.length)}
+                        helperText={usernameError}
                         required
                         fullWidth
-                        id="email"
-                        label="Email Address"
-                        {...register('email')}
-                        autoComplete="email"
+                        id="username"
+                        label="Username"
+                        {...register('username')}
+                        autoComplete="username"
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -90,7 +104,7 @@ const LoginForm = () => {
         </Box>
     </Box>
 </Container>
-
+</div>
     );
 }
 
