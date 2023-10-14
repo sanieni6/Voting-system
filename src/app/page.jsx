@@ -1,5 +1,4 @@
-'use client';
-import Dashboard from "../components/Dashboard"
+import Dashboard from '../components/rendingDash.jsx'
 
 const Home = () => {
   
