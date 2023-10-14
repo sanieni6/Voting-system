@@ -16,7 +16,7 @@ const LoginForm = () => {
     //setting login
     const router = useRouter();
     const {login, currentUser, isLoggedIn} = useVotingSystemStore();
-    console.log(currentUser);
+    //console.log(currentUser);
     const {register, handleSubmit} = useForm();
 
     const [usernameError, setUsernameError] = React.useState("");
@@ -47,7 +47,7 @@ const LoginForm = () => {
         if (isLoggedIn) {
             router.push('/');
         }
-    },);
+    },[isLoggedIn]);
 
     return (
         <div className=' h-screen'>
