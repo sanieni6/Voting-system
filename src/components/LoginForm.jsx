@@ -15,6 +15,9 @@ const LoginForm = () => {
 
     //setting login
     const router = useRouter();
+    React.useEffect(() => {
+        useVotingSystemStore.persist.rehydrate();
+      }, []); 
     const {login, currentUser, isLoggedIn} = useVotingSystemStore();
     //console.log(currentUser);
     const {register, handleSubmit} = useForm();
@@ -25,7 +28,7 @@ const LoginForm = () => {
 
 
     const handleFormSubmit = (formData) => {
-        console.log(formData);
+        //console.log(formData);
         login(formData.username, formData.password);
         if (!formData.username || !formData.username.length) {
             setUsernameError("username is required");

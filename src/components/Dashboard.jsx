@@ -24,6 +24,9 @@ const Dashboard = () => {
     "Luisa Gonzalez",
   ]);
   const [serie, setSerie] = useState([1, 6, 3]);
+  useEffect(() => {
+    useVotingSystemStore.persist.rehydrate();
+  }, []);
   const {
     isLoggedIn,
     getTodasJuntas,
@@ -33,7 +36,7 @@ const Dashboard = () => {
   } = useVotingSystemStore();
   useEffect(() => {
     getTodasJuntas();
-    console.log(votesPerProvince);
+    //console.log(votesPerProvince);
     if (votesPerProvince) {
       reloadCharts();
     }

@@ -1,3 +1,4 @@
+'use client'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { createCandidateSlice } from './candidatos'
@@ -11,6 +12,8 @@ export const useVotingSystemStore = create(persist((...a) => ({
     ...createJuntasReceptorasSlice(...a),
     ...createActaSlice(...a),
 }),
-{ name: 'voting-system-store' }
+{ name: 'voting-system-store',
+  skipHydration: true,
+}
 )
 )

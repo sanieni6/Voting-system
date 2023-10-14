@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 function Navbar() {
+  useEffect(() => {
+    useVotingSystemStore.persist.rehydrate();
+  }, []);
   const { isLoggedIn, logout, role } = useVotingSystemStore();
   const router = useRouter();
   const HandleLogout = () => {

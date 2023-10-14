@@ -78,6 +78,10 @@ const FormActa = () => {
   } = useForm();
 
   //store
+  useEffect(() => {
+    useVotingSystemStore.persist.rehydrate();
+  }, []);
+
   const {
     isLoggedIn,
     getCandidates,
