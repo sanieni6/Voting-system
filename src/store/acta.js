@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //mediante este endpoint puedo obtener todos los candidatos
-export const createActa = (set) => ({
+export const createActaSlice = (set) => ({
   votesPerProvince: null,
 
   //mediante este metodo puedo subir un acta

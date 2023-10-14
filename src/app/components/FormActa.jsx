@@ -11,7 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useForm } from "react-hook-form";
-import { useStore } from "@/store/store";
+import { useVotingSystemStore } from "@/store/store";
 
 import React from "react";
 
@@ -85,7 +85,7 @@ const FormActa = () => {
     getTodasJuntas,
     juntasReceptoras,
     postActa,
-  } = useStore();
+  } = useVotingSystemStore();
 
   useEffect(() => {
     getTodasJuntas();

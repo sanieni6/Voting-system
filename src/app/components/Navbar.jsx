@@ -1,11 +1,11 @@
 'use client'
 import Link from "next/link";
-import { useStore } from "@/store/store";
+import { useVotingSystemStore } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 function Navbar() {
-  const { isLoggedIn, logout, role } = useStore();
+  const { isLoggedIn, logout, role } = useVotingSystemStore();
   const router = useRouter();
   const HandleLogout = () => {
     logout();

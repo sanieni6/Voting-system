@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useStore } from "@/store/store";
+import { useVotingSystemStore } from "@/store/store";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -31,7 +31,7 @@ const Dashboard = () => {
     juntasReceptoras,
     getVotesPerProvince,
     votesPerProvince,
-  } = useStore();
+  } = useVotingSystemStore();
   useEffect(() => {
     getTodasJuntas();
     console.log(votesPerProvince);

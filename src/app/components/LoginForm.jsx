@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {useForm} from "react-hook-form";
-import { useStore } from '@/store/store';
+import { useVotingSystemStore } from '@/store/store';
 import { useRouter } from 'next/navigation'
 
 
@@ -16,7 +16,7 @@ const LoginForm = () => {
 
     //setting login
     const router = useRouter();
-    const {login, currentUser, isLoggedIn} = useStore();
+    const {login, currentUser, isLoggedIn} = useVotingSystemStore();
     console.log(currentUser);
     const {register, handleSubmit} = useForm();
 

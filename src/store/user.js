@@ -1,15 +1,10 @@
-import { create } from 'zustand';
-import axios from 'axios';
 
-const $LOCAL_LOGGEDIN_KEY = "my_app_logged_in";
-const $LOCAL_ROLE_KEY = "my_app_role";
-
-export const useAuthStore = (set) => (
+export const createUserSlice = (set) => (
     
     {
     currentUser:  null,
-    isLoggedIn: localStorage.getItem($LOCAL_LOGGEDIN_KEY) ||false,
-    role: localStorage.getItem($LOCAL_ROLE_KEY) || null,
+    isLoggedIn: false,
+    role:  null,
     login: async (username, password) => {
         try {
             const response = await fetch('http://52.200.0.69:5000/api/v1/auth/login', {
@@ -24,8 +19,6 @@ export const useAuthStore = (set) => (
                 set({ isLoggedIn: true });
                 set({ currentUser: user })
                 set({ role: user.role })
-                localStorage.setItem($LOCAL_LOGGEDIN_KEY, true);
-                localStorage.setItem($LOCAL_ROLE_KEY, user.role);
                 console.log( await response);
             } else {
                 throw new Error('Invalid email or password');
@@ -38,7 +31,5 @@ export const useAuthStore = (set) => (
         set({ isLoggedIn: false });
         set({ currentUser: null });
         set({ role: null });
-        localStorage.removeItem($LOCAL_LOGGEDIN_KEY);
-        localStorage.removeItem($LOCAL_ROLE_KEY);
     },
 });

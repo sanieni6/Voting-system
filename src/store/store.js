@@ -1,12 +1,16 @@
 import { create } from 'zustand'
-import { createCandidateStore } from './candidatos'
-import { useAuthStore } from './user'
-import { createJuntasReceptoras } from './juntasReceptoras'
-import { createActa } from './acta'
+import { persist } from 'zustand/middleware'
+import { createCandidateSlice } from './candidatos'
+import { createUserSlice } from './user'
+import { createJuntasReceptorasSlice } from './juntasReceptoras'
+import { createActaSlice } from './acta'
 
-export const useStore = create((...a) => ({
-    ...useAuthStore(...a),
-    ...createCandidateStore(...a),
-    ...createJuntasReceptoras(...a),
-    ...createActa(...a),
-}))
+export const useVotingSystemStore = create(persist((...a) => ({
+    ...createUserSlice(...a),
+    ...createCandidateSlice(...a),
+    ...createJuntasReceptorasSlice(...a),
+    ...createActaSlice(...a),
+}),
+{ name: 'voting-system-store' }
+)
+)
