@@ -1,4 +1,4 @@
-"use client"
+/* "use client"
 
 import * as React from 'react';
 import Button from '@mui/material/Button';
@@ -141,4 +141,4 @@ const SignUpForm = () => {
     );
 }
 
-export default SignUpForm
+export default SignUpForm */

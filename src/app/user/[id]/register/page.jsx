@@ -1,4 +1,4 @@
-import FormActa from "@/app/components/FormActa"
+import FormActa from "@/components/FormActa"
 
 const RegisterPage = () => {
   return (

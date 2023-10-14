@@ -47,7 +47,7 @@ export const createActaSlice = (set) => ({
       if (response.status === 201) {
         const votes = await response.data;
         set({ votesPerProvince: votes });
-        console.log(await votes);
+        //console.log(await votes);
       } else {
         throw new Error("Invalid email or password");
       }

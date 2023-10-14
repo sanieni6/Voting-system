@@ -19,7 +19,7 @@ export const createUserSlice = (set) => (
                 set({ isLoggedIn: true });
                 set({ currentUser: user })
                 set({ role: user.role })
-                console.log( await response);
+                //console.log( await response);
             } else {
                 throw new Error('Invalid email or password');
             }

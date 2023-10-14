@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useVotingSystemStore } from "@/store/store";
@@ -178,6 +177,7 @@ const Dashboard = () => {
               ]}
               width={400}
               height={200}
+              transformOrigin = "center center"
             />
           </div>
 
@@ -211,12 +211,12 @@ const Dashboard = () => {
         </div>
         {/*second container: table*/}
         <div>
-          <BarChart
+          {/* <BarChart
             xAxis={[{ scaleType: "band", data: candidatos }]}
             series={[{ data: serie }]}
             width={500}
             height={300}
-          />
+          /> */}
         </div>
       </div>
     </section>
