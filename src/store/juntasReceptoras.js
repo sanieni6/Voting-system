@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 //mediante este endpoint puedo obtener todos los candidatos
-export const createJuntasReceptoras = (set) => ({
+export const createJuntasReceptorasSlice = (set) => ({
     juntasReceptoras: [],
     junta: null,
     //Mediante esta función obtengo todas las juntas receptoras

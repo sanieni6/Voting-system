@@ -1,8 +1,14 @@
-import React from 'react'
+import Dashboard from '@/components/rendingDash'
 
 const Home = () => {
+  
   return (
-    <div>page</div>
+    <div>
+      < Dashboard />
+     {/* redirect to dashboard/presidente */}
+
+
+    </div>
   )
 }
 

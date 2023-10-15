@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import axios from 'axios'
 
 //mediante este endpoint puedo obtener todos los candidatos
-export const createCandidateStore = (set) => ({
+export const createCandidateSlice = (set) => ({
     candidates: [],
     getCandidates: async () => {
         try {
