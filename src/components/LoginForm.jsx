@@ -8,13 +8,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useForm } from "react-hook-form";
 import { useVotingSystemStore } from "@/store/store";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   //setting login
+    const router = useRouter();
   React.useEffect(() => {
     useVotingSystemStore.persist.rehydrate();
   }, []);
-  const { login } = useVotingSystemStore();
+  const { login, isLoggedIn } = useVotingSystemStore();
   //console.log(currentUser);
   const {
     register,
@@ -26,6 +28,12 @@ const LoginForm = () => {
     login(formData.username, formData.password);
     return true;
   };
+
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/');
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className=" h-screen">

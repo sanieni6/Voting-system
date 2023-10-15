@@ -68,7 +68,7 @@ const Dashboard = () => {
     if (!isLoggedIn) {
       router.push('/login');
     }
-  });
+  }, []);
 
   const {
     register,
