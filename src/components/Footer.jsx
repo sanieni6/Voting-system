@@ -1,5 +1,3 @@
-'use client';
-import { Typography } from "@material-tailwind/react";
  
 export function Footer() {
   return (
@@ -9,51 +7,39 @@ export function Footer() {
         <h3 className="text-white">Chiang</h3>
         <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
           <li>
-            <Typography
-              as="a"
-              href="#"
-              color="blue-gray"
+            <h6
               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500 text-white"
             >
               About Us
-            </Typography>
+            </h6>
           </li>
           <li>
-            <Typography
-              as="a"
-              href="#"
-              color="blue-gray"
+            <h6
               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500 text-white"
             >
               License
-            </Typography>
+            </h6>
           </li>
           <li>
-            <Typography
-              as="a"
-              href="#"
-              color="blue-gray"
+            <h6
               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500 text-white"
             >
               Contribute
-            </Typography>
+            </h6>
           </li>
           <li>
-            <Typography
-              as="a"
-              href="#"
-              color="blue-gray"
+            <h6
               className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500 text-white"
             >
               Contact Us
-            </Typography>
+            </h6>
           </li>
         </ul>
       </div>
       <hr className="my-8 border-blue-gray-50" />
-      <Typography color="blue-gray" className="text-center font-normal text-white">
+      <h3 className="text-center font-normal text-white">
         &copy; 2023 Chiang, Rigths Reserved
-      </Typography>
+      </h3>
     </footer>
   );
 }

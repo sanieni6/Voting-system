@@ -1,6 +1,6 @@
 'use client'
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
 import { createCandidateSlice } from './candidatos'
 import { createUserSlice } from './user'
 import { createJuntasReceptorasSlice } from './juntasReceptoras'
@@ -13,6 +13,7 @@ export const useVotingSystemStore = create(persist((...a) => ({
     ...createActaSlice(...a),
 }),
 { name: 'voting-system-store',
+  storage: createJSONStorage(()=>localStorage),
   skipHydration: true,
 }
 )
