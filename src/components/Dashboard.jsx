@@ -214,12 +214,12 @@ const Dashboard = () => {
         </div>
         {/*second container: table*/}
         <div>
-          {/* <BarChart
+          <BarChart
             xAxis={[{ scaleType: "band", data: candidatos }]}
             series={[{ data: serie }]}
             width={500}
             height={300}
-          /> */}
+          />
         </div>
       </div>
     </section>
