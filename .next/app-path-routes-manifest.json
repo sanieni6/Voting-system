@@ -1,0 +1,10 @@
+{
+  "/_not-found": "/_not-found",
+  "/page": "/",
+  "/favicon.ico/route": "/favicon.ico",
+  "/login/page": "/login",
+  "/dashboard/page": "/dashboard",
+  "/dashboard/presidente/page": "/dashboard/presidente",
+  "/user/[id]/page": "/user/[id]",
+  "/user/[id]/register/page": "/user/[id]/register"
+}
