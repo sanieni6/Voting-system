@@ -7,7 +7,7 @@ export const createUserSlice = (set) => (
     role:  null,
     login: async (username, password) => {
         try {
-            const response = await fetch('http://52.200.0.69:5000/api/v1/auth/login', {
+            const response = await fetch('http://54.89.73.83:5000/api/v1/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -19,9 +19,9 @@ export const createUserSlice = (set) => (
                 set({ isLoggedIn: true });
                 set({ currentUser: user })
                 set({ role: user.role })
-                //console.log( await response);
+                return 'Inicio de sessión exitoso';
             } else {
-                throw new Error('Invalid email or password');
+                return 'Invalid email or password';
             }
         } catch (error) {
             console.error(error);
@@ -31,5 +31,6 @@ export const createUserSlice = (set) => (
         set({ isLoggedIn: false });
         set({ currentUser: null });
         set({ role: null });
+        return 'Goodbye';
     },
 });
