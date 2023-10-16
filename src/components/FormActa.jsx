@@ -12,6 +12,10 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useForm } from "react-hook-form";
 import { useVotingSystemStore } from "@/store/store";
+import SnackbarFeedback from "./SnackbarFeedback";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import FormGroup from "@mui/material/FormGroup";
 
 import React from "react";
 
@@ -30,12 +34,17 @@ const FormActa = () => {
   const [ciudades, setCiudades] = useState([]);
   const [parroquias, setParroquias] = useState([]);
   const [circunscripciones, setCircunscripciones] = useState([]);
+  const [zonas, setZonas] = useState([]);
+  const [juntas , setJuntas] = useState([]);
 
   //handle textf.ield to calcule total votos
   const [totalVotos, setTotalVotos] = useState(0);
   const [votosBlancos, setVotosBlancos] = useState(0);
   const [votosNulos, setVotosNulos] = useState(0);
   const [votosCandidatos, setVotosCandidatos] = useState(0);
+  const [error, setError] = React.useState('');
+  const [quickCount, setQuickCount] = useState(false);
+  const [novedad, setNovedad] = useState(false);
 
   //handling selector fields
   const handleChangeProvincia = (event) => {
@@ -61,6 +70,18 @@ const FormActa = () => {
   const handleChangeZona = (event) => {
     setZona(event.target.value);
   };
+
+  useEffect(() => {
+    loadJunta();
+  }, [provincia, canton, parroquia]);
+
+  useEffect(() => {
+    loadCircunscripcion();
+  }, [provincia]);
+
+  useEffect(() => {
+    loadZona();
+  }, [provincia,canton, parroquia]);
 
   const handleChangeCanton = (event) => {
     setCanton(event.target.value);
@@ -129,6 +150,26 @@ const FormActa = () => {
     setParroquias(parroquias);
   };
 
+  const loadJunta = () => {
+    let juntas = [];
+    juntasReceptoras.forEach((element) => {
+      if (element.province == provincia && element.city == canton && element.parish == parroquia) {
+        juntas.push(element.id);
+      }
+    })
+    setJuntas(juntas);
+  };
+
+  const loadCircunscripcion = () => {
+    let circunscripciones = [];
+    juntasReceptoras.forEach((element) => {
+      if (element.province == provincia) {
+        circunscripciones.push(element.district);
+      }
+    })
+    setCircunscripciones(circunscripciones);
+  };
+
   const loadJuntaId = () => {
     juntasReceptoras.forEach((element) => {
       if (element.province == provincia && element.city == canton && element.parish == parroquia) {
@@ -137,7 +178,40 @@ const FormActa = () => {
     })
   };
 
+  const loadZona = () => {
+    let zonas = [];
+    juntasReceptoras.forEach((element) => {
+      if (element.province == provincia && element.city == canton && element.parish == parroquia) {
+        zonas.push(element.zone);
+      }
+    })
+    setZonas(zonas);
+  };
+
+  const emptyInputsFields = () => {
+    const inputs = document.querySelectorAll("input");
+    const parroquiaId = document.getElementById("parroquia");
+    const cantonId = document.getElementById("canton");
+    const juntaId = document.getElementById("junta");
+    const circunscripcionId = document.getElementById("circunscripcion");
+    const zonaId = document.getElementById("zona");
+    const provinciaId = document.getElementById("provincia");
+    
+    parroquiaId.value = "";
+    cantonId.value = "";
+    juntaId.value = "";
+    circunscripcionId.value = "";
+    zonaId.value = "";
+    provinciaId.value = "";
+
+    inputs.forEach((input) => {
+      input.value = "";
+    });
+
+  };
+
   const handleFormSubmit = (formData) => {
+    setError("");
     let totalVotesCandidate = 0;
     const voteCandidate = [];
     for (const [key, value] of Object.entries(formData)) {
@@ -159,15 +233,21 @@ const FormActa = () => {
       "blank_votes": formData["votosBlancos"],
       "null_votes": formData["votosNulos"],
       "vote_candidate": voteCandidate,
+      "is_quick_count": quickCount,
+      "has_inconsistencies": novedad,
     }
     formData["central_electoral"] = juntaReceptora;
     console.log(totalVotesCandidate + parseInt(formData["votosBlancos"]) + parseInt(formData["votosNulos"]));
-    if(totalVotesCandidate + parseInt(formData["votosBlancos"]) + parseInt(formData["votosNulos"]) === parseInt(formData["totalSufragantes"])){
-    //console.log(formData);
-    console.log(submissionData);
-    postActa(submissionData)
+    if(parseInt(formData["totalSufragantes"]) > 350){
+      alert("El total de sufragantes no puede ser mayor a 350");
+    } if (totalVotesCandidate + parseInt(formData["votosBlancos"]) + parseInt(formData["votosNulos"]) === parseInt(formData["totalSufragantes"])){
+    const message = postActa(submissionData);
+    message ? alert("Acta registrada") : setError('');
+    emptyInputsFields();
     }else{
-      alert("Los votos no coinciden con el total de sufragantes");
+      //alert("Los votos no coinciden con el total de sufragantes");
+      alert('Los votos no coinciden con el total de sufragantes o el total de sufragantes es mayor a 350');
+
     }
     return true;
   };
@@ -250,9 +330,13 @@ const FormActa = () => {
                     {...register("circunscripcion")}
                     onChange={handleChangeCircunscripcion}
                   >
-                    <MenuItem value={10}>circunscripcion 1</MenuItem>
-                    <MenuItem value={20}>circunscripcion 2</MenuItem>
-                    <MenuItem value={30}>circunscripcion 3</MenuItem>
+                    {circunscripciones.map((circunscripcion, id) => {
+                          return (
+                            <MenuItem key={id} value={circunscripcion}>
+                              {circunscripcion}{" "}
+                            </MenuItem>
+                          );
+                        })}
                   </Select>
                   {errors.circunscripcion && (
                     <span className="text-red-500">This field is required</span>
@@ -270,9 +354,13 @@ const FormActa = () => {
                     {...register("zona")}
                     onChange={handleChangeZona}
                   >
-                    <MenuItem value={10}>Zona 1</MenuItem>
-                    <MenuItem value={20}>Zona 2</MenuItem>
-                    <MenuItem value={30}>Zona 3</MenuItem>
+                    {zonas.map((zona, id) => {
+                          return (
+                            <MenuItem key={id} value={zona}>
+                              {zona}{" "}
+                            </MenuItem>
+                          );
+                        })}
                   </Select>
                   {errors.zona && (
                     <span className="text-red-500">This field is required</span>
@@ -314,9 +402,13 @@ const FormActa = () => {
                     {...register("junta", { required: true })}
                     onChange={handleChangeJunta}
                   >
-                    <MenuItem value={10}>Junta 1</MenuItem>
-                    <MenuItem value={20}>Junta 2</MenuItem>
-                    <MenuItem value={30}>Junta 3</MenuItem>
+                    {juntas.map((junta, id) => {
+                          return (
+                            <MenuItem key={id} value={junta}>
+                              {junta}{" "}
+                            </MenuItem>
+                          );
+                        })}
                   </Select>
                   {errors.junta && (
                     <span className="text-red-500">This field is required</span>
@@ -403,13 +495,44 @@ const FormActa = () => {
                             fullWidth
                             id={candidate.id}
                             label="N° votos"
-                            autoFocus
                         />
                   </Grid>
                   </>
                 )
 
               })}
+            </Grid>
+            <Grid container spacing={2} className="mt-3">
+            <Grid item xs={12} sm={6}>
+            <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={quickCount}
+                        onChange={(event) =>
+                          setQuickCount(event.target.checked)
+                        }
+                      />
+                    }
+                    label="Conteo Rapido"
+                  />
+                </FormGroup>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={novedad}
+                        onChange={(event) =>
+                          setNovedad(event.target.checked)
+                        }
+                      />
+                    }
+                    label="Inconsistencia"
+                  />
+                </FormGroup>
+                </Grid>
             </Grid>
             <Button
               type="submit"
@@ -422,6 +545,9 @@ const FormActa = () => {
             </Button>
           </Box>
         </Box>
+        {
+          error!='' &&  <SnackbarFeedback openStatus={true} message={error} /> 
+        }
       </Container>
     </div>
   );

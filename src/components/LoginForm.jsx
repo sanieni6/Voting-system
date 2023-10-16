@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import { useForm } from "react-hook-form";
 import { useVotingSystemStore } from "@/store/store";
 import { useRouter } from "next/navigation";
+import SnackbarFeedback from "./SnackbarFeedback";
 
 const LoginForm = () => {
   //setting login
@@ -17,6 +18,7 @@ const LoginForm = () => {
     useVotingSystemStore.persist.rehydrate();
   }, []);
   const { login, isLoggedIn } = useVotingSystemStore();
+  const [error, setError] = React.useState('');
   //console.log(currentUser);
   const {
     register,
@@ -24,11 +26,12 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm();
 
-  const handleFormSubmit = (formData) => {
-    login(formData.username, formData.password);
-    return true;
+  const handleFormSubmit = async (formData) => {
+    const message = await login(formData.username, formData.password);
+    message ? setError(message) : setError('Invalid email or password');
+    
   };
-//"@material-tailwind/react": "^2.1.2",
+
   React.useEffect(() => {
     if (isLoggedIn) {
       router.push('/');
@@ -95,6 +98,10 @@ const LoginForm = () => {
             </Button>
           </Box>
         </Box>
+        {
+          error!='' &&  <SnackbarFeedback openStatus={true} message={error} /> 
+        }
+        
       </Container>
     </div>
   );

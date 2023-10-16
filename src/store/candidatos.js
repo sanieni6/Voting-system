@@ -6,7 +6,7 @@ export const createCandidateSlice = (set) => ({
     candidates: [],
     getCandidates: async () => {
         try {
-        const response = await axios.get('http://52.200.0.69:5000/api/v1/candidates/election/1')
+        const response = await axios.get('http://54.89.73.83:5000/api/v1/candidates/election/1')
         set({ candidates: response.data })
         } catch (error) {
             console.error(error)
